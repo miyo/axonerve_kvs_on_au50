@@ -18,7 +18,7 @@
 * Run tcl script (`create_project.tcl`) to build
 
 ```
-% git clone https://github.com/miyo/axonerve_example_au50.git
+% git clone --recursive https://github.com/miyo/alveo_u50_misc.git
 % cd axonerve_etherif
 % vivado -mode batch -source ./create_project.tcl
 ```
