@@ -19,7 +19,7 @@
 
 ```
 % git clone --recursive https://github.com/miyo/alveo_u50_misc.git
-% cd axonerve_etherif
+% cd alveo_u50_misc
 % vivado -mode batch -source ./create_project.tcl
 ```
 
@@ -40,7 +40,7 @@ Axonerve in this reference can handle queries up to 200M queries/sec, theoretica
 Download [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit) and configure Alveo U50 with the bit-stream. Run test script [raw_axonerve_util.py](./software/raw_axonerve_util.py). The execution result is as the followinng.
 
 ```
-miyo@talisker:~/axonerve_etherif/software$ sudo python3 raw_axonerve_util.py enp3s0f
+$ sudo python3 raw_axonerve_util.py enp3s0f
 *** test (search-write-search-erase-search) ***
 search
 [[b'\x00\x00\x00\x00', b'\x00\x00\x00\x00']]
@@ -157,6 +157,6 @@ search
 [b'\x00\x00\x00\x00', b'\x00\x00\x00\x00']
 [b'\x00\x00\x00\x00', b'\x00\x00\x00\x00']
 [b'\x00\x00\x00\x00', b'\x00\x00\x00\x00']
-miyo@talisker:~/axonerve_etherif/software$ 
+$ 
 ```
 
