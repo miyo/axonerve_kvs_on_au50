@@ -1,6 +1,6 @@
 # Axonerve/100GbE on AU50
 
-* [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit (5min. limited version)
+* [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit (5min. limited version))
 * [AXONERVE_HBM_TOP.ltx](./bin/AXONERVE_HBM_TOP.ltx)
 
 ## Building bit-file with Vivado
