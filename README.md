@@ -18,8 +18,8 @@
 * Run tcl script (`create_project.tcl`) to build
 
 ```
-% git clone --recursive https://github.com/miyo/alveo_u50_misc.git
-% cd alveo_u50_misc
+% git clone --recursive https://github.com/miyo/axonerve_example_au50.git
+% cd axonerve_example_au50
 % vivado -mode batch -source ./create_project.tcl
 ```
 
