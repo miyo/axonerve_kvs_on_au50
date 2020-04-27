@@ -9,16 +9,16 @@ set source_files { \
 			./sources/defines_h.vh \
 			./axonerve/AXONERVE_A01_HBM_all.vp \
 			./sources/HBM_CONTROLLER.v \
-			./sources/wasalabo/app_cmac_frontend.v \
-			./sources/wasalabo/cmac_usplus_0_axi4_lite_user_if.v \
-			./sources/wasalabo/cmac_usplus_0_lbus_pkt_gen.v \
-			./sources/wasalabo/cmac_usplus_0_lbus_pkt_mon.v \
-			./sources/wasalabo/cmac_usplus_0_pkt_gen_mon.v \
-			./sources/wasalabo/resetgen.v \
-			./sources/wasalabo/cmac_usplus_emitter.sv \
-			./sources/wasalabo/ether_rx.sv \
-			./sources/wasalabo/ether_tx.sv \
 			./sources/AXONERVE_HBM_TOP.v \
+			./sources/app_cmac_frontend.v \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/cmac_usplus_0_axi4_lite_user_if.v \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/cmac_usplus_0_lbus_pkt_gen.v \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/cmac_usplus_0_lbus_pkt_mon.v \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/cmac_usplus_0_pkt_gen_mon.v \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/resetgen.v \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/cmac_usplus_emitter.sv \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/ether_rx.sv \
+			./alveo_u50_misc/cmac_usplus_0_ex/sources/ether_tx.sv \
 		   }
 
 set constraint_files { \
