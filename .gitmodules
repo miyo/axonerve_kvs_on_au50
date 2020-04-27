@@ -1,3 +1,3 @@
 [submodule "alveo_u50_misc"]
 	path = alveo_u50_misc
-	url = git@github.com:miyo/alveo_u50_misc.git
+	url = https://github.com/miyo/alveo_u50_misc.git
