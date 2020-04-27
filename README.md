@@ -3,6 +3,38 @@
 * [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit (5min. limited version)
 * [AXONERVE_HBM_TOP.ltx](./bin/AXONERVE_HBM_TOP.ltx)
 
+## Building bit-file with Vivado
+
+### Pre-requirements
+
+* Vivado 2019.2.1
+* Xilinx 100GbE MAC license (available [here](https://www.xilinx.com/products/intellectual-property/cmac_usplus.html)
+* Alveo U50 board definition file (put the files at `$XILINX_VIVADO/data/boards/board_files/au50/` )
+
+### Building Steps
+
+* Clone this repository
+* Put AXONERVE_A01_HBM_all.vp at `axonerve/`
+* Run tcl script (`create_project.tcl`) to build
+
+```
+% git clone https://github.com/miyo/axonerve_example_au50.git
+% cd axonerve_etherif
+% vivado -mode batch -source ./create_project.tcl
+```
+
+* After compilation, you can get `prj/axonerve_etherif.runs/impl_1/AXONERVE_HBM_TOP.bit`
+
+## Software Development
+
+### Python library
+
+Pyhton users can use [raw_axonerve_util.py](./software/raw_axonerve_util.py) as a library. Please see [raw_axonerve_se.py](./software/raw_axonerve_se.py), [raw_axonerve_we.py](./software/raw_axonerve_we.py), and [raw_axonerve_reset.py](./software/raw_axonerve_reset.py) to know how to use it.
+
+### Performance checker
+
+Axonerve in this reference can handle queries up to 200M queries/sec, theoretically. Due to 100GbE limits, the maximum performance is about 190M queries/sec. You can check the performance by using [perf_check.c](./software/perf_check.c).
+
 ## Getting Started
 
 Download [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit) and configure Alveo U50 with the bit-stream. Run test script [raw_axonerve_util.py](./software/raw_axonerve_util.py). The execution result is as the followinng.
@@ -128,34 +160,3 @@ search
 miyo@talisker:~/axonerve_etherif/software$ 
 ```
 
-## Building bit-file with Vivado
-
-### Pre-requirements
-
-* Vivado 2019.2.1
-* Xilinx 100GbE MAC license (available [here](https://www.xilinx.com/products/intellectual-property/cmac_usplus.html)
-* Alveo U50 board definition file (put the files at `$XILINX_VIVADO/data/boards/board_files/au50/` )
-
-### Building Steps
-
-* Clone this repository
-* Put AXONERVE_A01_HBM_all.vp at `axonerve/`
-* Run tcl script (`create_project.tcl`) to build
-
-```
-% git clone https://github.com/miyo/axonerve_example_au50.git
-% cd axonerve_etherif
-% vivado -mode batch -source ./create_project.tcl
-```
-
-* After compilation, you can get `prj/axonerve_etherif.runs/impl_1/AXONERVE_HBM_TOP.bit`
-
-## Software Development
-
-### Python library
-
-Pyhton users can use [raw_axonerve_util.py](./software/raw_axonerve_util.py) as a library. Please see [raw_axonerve_se.py](./software/raw_axonerve_se.py), [raw_axonerve_we.py](./software/raw_axonerve_we.py), and [raw_axonerve_reset.py](./software/raw_axonerve_reset.py) to know how to use it.
-
-### Performance checker
-
-Axonerve in this reference can handle queries up to 200M queries/sec, theoretically. Due to 100GbE limits, the maximum performance is about 190M queries/sec. You can check the performance by using [perf_check.c](./software/perf_check.c).
