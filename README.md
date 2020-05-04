@@ -1,7 +1,39 @@
-# Axonerve/100GbE on AU50
+# KVS with Axonerve and 100GbE on AU50
 
-* [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit (5min. limited version))
-* [AXONERVE_HBM_TOP.ltx](./bin/AXONERVE_HBM_TOP.ltx)
+## Overview
+
+This is an example of KVS implementation with Axonerve and 100GbE on Alveo U50. The bit-width of key and value is 288-bit and 32-bit, respectively. The maximum number of entries is 67,108,864, because of  Axonerve capacity.
+
+The below block diagram shows the architecture. 
+
+![block diagram](./doc/overview.png)
+
+You can emit SEARCH, WRITE, and DELETE commands into the KVS via 100GbE. The below figure shows the packet format of commands.
+
+![packet format](./doc/packet_format.png)
+
+The Ethernet type `0x3434` indicate the packet includes KVS queries. The number of octets in a query is 64. In case the number of queries exceeds 23, Ethernet MTU should be set appropriately to make jumbo-frame available.
+
+The bit assignments of command/status fields are as followings
+
+| bit | command |
+|:---:|:--------|
+| 0   | erase   |
+| 1   | write   |
+| 4   | search  |
+
+| bit | status              |
+|:---:|:--------------------|
+| 0   | single hit          |
+|     |                     |
+| 3:2 | Axonerve error code |
+
+## Getting Started
+
+1. Download [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit) and [AXONERVE_HBM_TOP.ltx](./bin/AXONERVE_HBM_TOP.ltx)
+1. Configure Alveo U50 with the bit-stream and the ltx file.
+1. Run test script [raw_axonerve_util.py](./software/raw_axonerve_util.py).
+1. The available bit-file is 5min. limited version.
 
 ## Building bit-file with Vivado
 
@@ -18,8 +50,8 @@
 * Run tcl script (`create_project.tcl`) to build
 
 ```
-% git clone --recursive https://github.com/miyo/axonerve_example_au50.git
-% cd axonerve_example_au50
+% git clone --recursive https://github.com/miyo/axonerve_kvs_on_au50.git
+% cd axonerve_kvs_on_au50
 % vivado -mode batch -source ./create_project.tcl
 ```
 
@@ -35,9 +67,7 @@ Pyhton users can use [raw_axonerve_util.py](./software/raw_axonerve_util.py) as 
 
 Axonerve in this reference can handle queries up to 200M queries/sec, theoretically. Due to 100GbE limits, the maximum performance is about 190M queries/sec. You can check the performance by using [perf_check.c](./software/perf_check.c).
 
-## Getting Started
-
-Download [AXONERVE_HBM_TOP.bit](./bin/AXONERVE_HBM_TOP.bit) and configure Alveo U50 with the bit-stream. Run test script [raw_axonerve_util.py](./software/raw_axonerve_util.py). The execution result is as the followinng.
+## An example of Execution
 
 ```
 $ sudo python3 raw_axonerve_util.py enp3s0f
@@ -159,4 +189,3 @@ search
 [b'\x00\x00\x00\x00', b'\x00\x00\x00\x00']
 $ 
 ```
-
