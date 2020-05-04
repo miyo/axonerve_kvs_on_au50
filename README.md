@@ -25,7 +25,6 @@ The bit assignments of command/status fields are as followings
 | bit | status              |
 |:---:|:--------------------|
 | 0   | single hit          |
-|     |                     |
 | 3:2 | Axonerve error code |
 
 ## Getting Started
