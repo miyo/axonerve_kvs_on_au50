@@ -1193,7 +1193,7 @@ module app_cmac_frontend
 
     wire fifo_axonerve2ether_full;
     reg fifo_axonerve2ether_wr = 1'b0;
-    reg [511:0] fifo_axonerve2ether_din = 1'b0;
+    reg [511:0] fifo_axonerve2ether_din;
 
     wire fifo_axonerve2ether_empty;
     reg fifo_axonerve2ether_rd = 1'b0;
@@ -1222,7 +1222,7 @@ module app_cmac_frontend
     always @(posedge w_iclkdiv2) begin
 	if(OACK == 1'b1) begin
 	    fifo_axonerve2ether_wr <= 1'b1;
-	    fifo_axonerve2ether_din[511:480] <= user_cmd;
+	    fifo_axonerve2ether_din[511:480] <= 32'h0;
 	    fifo_axonerve2ether_din[479:192] <= OKEY_DAT;
 	    fifo_axonerve2ether_din[191:160] <= OKEY_VALUE;
 	    fifo_axonerve2ether_din[159:128] <= OSRCH_ENT_ADD;
@@ -1242,6 +1242,7 @@ module app_cmac_frontend
 
     reg[7:0] state = 8'd0;
     reg[8:0] data_counter = 9'd0;
+    reg[31:0] app_command_fifo_q_r;
     always @(posedge txusrclk2) begin
 	if(txusrclk2_reset == 1) begin
 	    fifo_axonerve2ether_rd <= 1'b0;
@@ -1274,6 +1275,7 @@ module app_cmac_frontend
 		    ether_tx_data_mty <= 14'd0;
 		    ether_tx_data_data <= 512'd0;
 		    ether_header_rd <= 1'b0;
+                    app_command_fifo_q_r <= app_command_fifo_q;
 		end
 		8'd1: begin
 		    app_command_fifo_rd <= 1'b0;
@@ -1291,7 +1293,7 @@ module app_cmac_frontend
 		    ether_header_rd <= 1'b1;
 		    ether_tx_data_sop <= 1'b1;
 		    ether_tx_data_valid <= 1'b1;
-		    ether_tx_data_data <= fifo_axonerve2ether_dout;
+		    ether_tx_data_data <= {app_command_fifo_q_r, fifo_axonerve2ether_dout[479:0]};
 		    data_counter <= data_counter - 1;
 		end
 		8'd2: begin
@@ -1309,7 +1311,7 @@ module app_cmac_frontend
 		    ether_header_rd <= 1'b0;
 		    ether_tx_data_sop <= 1'b0;
 		    ether_tx_data_valid <= 1'b1;
-		    ether_tx_data_data <= fifo_axonerve2ether_dout;
+		    ether_tx_data_data <= {app_command_fifo_q_r, fifo_axonerve2ether_dout[479:0]};
 		    data_counter <= data_counter - 1;
 		end
 		default: begin
