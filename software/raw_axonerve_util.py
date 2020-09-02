@@ -53,11 +53,13 @@ class Axonerve:
             print('src', binascii.hexlify(rdata[6:6+6]))
             print('header', binascii.hexlify(rdata[6+6:6+6+2]))
         
-    def write(self, key_values):
+    def write(self, key_values, packet_id=0):
         num = len(key_values)
         if(num > 128):
             return []
-        command = bytearray([0, num, 0, 0])
+        packet_id_h = (packet_id >> 8) & 0xFF
+        packet_id_l = (packet_id >> 0) & 0xFF
+        command = bytearray([0, num, packet_id_h, packet_id_l])
         message = b''
         for kv in key_values:
             message += command
@@ -80,11 +82,13 @@ class Axonerve:
                 print(binascii.hexlify(rdata[offset:offset+64]))
         return addrs
     
-    def search(self, keys):
+    def search(self, keys, packet_id=0):
         num = len(keys)
         if(num > 128):
             return []
-        command = bytearray([0, num, 0, 0])
+        packet_id_h = (packet_id >> 8) & 0xFF
+        packet_id_l = (packet_id >> 0) & 0xFF
+        command = bytearray([0, num, packet_id_h, packet_id_l])
         message = b''
         for k in keys:
             message += command
@@ -107,11 +111,13 @@ class Axonerve:
                 print(binascii.hexlify(rdata[offset:offset+64]))
         return values
 
-    def erase(self, keys):
+    def erase(self, keys, packet_id=0):
         num = len(keys)
         if(num > 128):
             return []
-        command = bytearray([0, num, 0, 0])
+        packet_id_h = (packet_id >> 8) & 0xFF
+        packet_id_l = (packet_id >> 0) & 0xFF
+        command = bytearray([0, num, packet_id_h, packet_id_l])
         message = b''
         for k in keys:
             message += command
@@ -140,7 +146,7 @@ if __name__ == '__main__':
         sys.exit(0)
     dev = sys.argv[1]
     num = 16 if len(sys.argv) < 3 else int(sys.argv[2])
-    axonerve = Axonerve(dev)
+    axonerve = Axonerve(dev, debug=True)
     
     axonerve.reset()
 
@@ -160,11 +166,11 @@ if __name__ == '__main__':
     print(ret)
     
     print("write")
-    ret = axonerve.write([[k0, v0]])
+    ret = axonerve.write([[k0, v0]], packet_id=0x3434)
     print(ret)
     
     print("search")
-    ret = axonerve.search([k0])
+    ret = axonerve.search([k0], packet_id=0xaa55)
     print(ret)
     
     print("erase")
@@ -255,6 +261,6 @@ if __name__ == '__main__':
     for r in ret:
         print(r)
     print("search")
-    ret = axonerve.search(k)
+    ret = axonerve.search(k, packet_id=0x3434)
     for r in ret:
         print(r)
